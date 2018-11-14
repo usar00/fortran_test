@@ -72,6 +72,22 @@ do I=1,3
 end do
 end do
 ! RINESTaround cms
-call INERTIA()
+call INERTIA(W,C,NATOMS,RINERT)
+!
+! diagnaze INERTIA
+!
+call DSYEV('V','L',3,RINERT,3,DiagInert,WORK,8,INFO)
+if (INFO /= 0) then
+		print *,'in DSYEV.INFO=', INFO
+		stop
+		end if
+!
+!
+!
+!
+	print *, '***NEW COORDINATE***'
+do K=1,NATOMS
+		do I=1,3
+				DUM = 
 end program rot
 
