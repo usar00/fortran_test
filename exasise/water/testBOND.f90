@@ -5,19 +5,29 @@ implicit none
     C(:,1) = (/0.0D00, 0.0D00, 0.0D00/)
     C(:,2) = (/1.0D00, 1.0D00, 0.0D00/)
     C(:,3) = (/-1.0D00, 1.0D00, 0.0D00/)
+!*******
+!*******
+!*******
+    print * , "************"
+    print * , "***  1   ***"
+    print * , "************"
     print *,"C=", C
     call BOND(C(1,1),C(2,1),R,DRDX)
-    print * ,"R=", R 
-    print *, "DRDX=", DRDX
+    print * ,"R="
+    print * ,R 
+    print *, "DRDX="
+    print * , DRDX
     call ANGLE(C(1,1),C(1,2),C(1,3),THETA,DTDX)
-    print * ,"theta=", theta
-    print * ,"DTDX=",DTDX
+    print * ,"theta="
+    print * , theta
+    print * ,"DTDX="
+    print * ,DTDX
 !*******
 !******
 !*******
     print * , "************"
-    print * , "***ROUND2***"
-    print * , "************"
+    print * , "***  2   ***"
+    print * , "*Translation*"
     do i=1,3
         do j=1,3
             C(i,j)= C(i,j) + 1.0D00
@@ -27,21 +37,25 @@ implicit none
     print * ,"R=", R 
     print *, "DRDX=", DRDX
     call ANGLE(C(1,1),C(1,2),C(1,3),THETA,DTDX)
-    print * ,"theta=", theta
-    print * ,"DTDX=",DTDX
+    print * ,"theta="
+    print * , theta
+    print * ,"DTDX="
+    print * ,DTDX
 
 !*******
 !*******
 !*******
     print * , "************"
-    print * , "***ROUND3***"
-    print * , "************"
+    print * , "***  3   ***"
+    print * , "**Rotation***"
     call ROTATION(C(1,1))
     call ROTATION(C(1,2))
     call ROTATION(C(1,3))
     call ANGLE(C(1,1),C(1,2),C(1,3),THETA,DTDX)
-    print * ,"theta=", theta
-    print * ,"DTDX=",DTDX
+    print * ,"theta="
+    print * , theta
+    print * ,"DTDX="
+    print * ,DTDX
 end program main!
 
 !*******
@@ -118,9 +132,9 @@ subroutine ROTATION(C)
   implicit none
   real*8 :: PHI,PSI,THETA,C(3),C_new(3),PI
   PI =acos(-1.0D00)
-  PHI=0.223D00*2*PI
-  PSI=0.378D00*2*PI
-  THETA=0.181D00*PI !0<THETA<PI
+  PHI=0.25D00*2*PI
+  PSI=0.25D00*2*PI
+  THETA=0.25D00*PI !0<THETA<PI
   C_new(1)=(cos(PSI)*cos(PHI)-cos(THETA)*sin(PHI)*sin(PSI)) *C(1) &
        +(cos(PSI)*sin(PHI)+cos(THETA)*cos(PHI)*sin(PSI))    *C(2) &
        +(sin(PSI)*sin(THETA))                               *C(3)
@@ -131,6 +145,8 @@ subroutine ROTATION(C)
        +(-sin(THETA)*cos(PHI))                              *C(2) &
        +cos(THETA)                                          *C(3)
   C=C_new
+!  print *,"CNEW="
+!  print *, C_new
 !    print *, "C=" , C
   end subroutine ROTATION
 
